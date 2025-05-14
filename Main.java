@@ -35,6 +35,7 @@ class RivalRun extends Frame implements KeyListener, FocusListener, MouseListene
    private int gameClock;
    private Rectangle start, instructions, mapEditor, back;
    private int numPage;
+   private static boolean music;
 
    public RivalRun()
    {
@@ -48,9 +49,25 @@ class RivalRun extends Frame implements KeyListener, FocusListener, MouseListene
       addFocusListener(this);
       addMouseListener(this);
       start = new Rectangle(500,500,900,100);
-		instructions = new Rectangle(500,650,900,100);
-		mapEditor = new Rectangle(500,800,900,100);
+      instructions = new Rectangle(500,650,900,100);
+      mapEditor = new Rectangle(500,800,900,100);
       back = new Rectangle(75,60,75,60);
+      try
+      {
+         if(!music)
+         {
+            File f = new File("sounds/Background.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+            music = true;
+         }
+      }
+      catch (Exception ex)
+      {
+         System.out.println(ex);
+      }
       numPage = 0;
       focus = true;
       ready = true;
